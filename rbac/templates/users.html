@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #191a1dff;
+            background-image: url('/static/assets/bg.png');
+            background-size: cover;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .navbar {
+            width: 100%;
+            background-color: #2d3133;
+        }
+        .navbar .navbar-brand {
+            color: white;
+        }
+        .navbar .nav-link {
+            color: white;
+        }
+        .navbar .nav-link:hover {
+            color: #FF7F00;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .card {
+            background-color: #2d3133;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .table th, .table td {
+            color: white;
+        }
+        .btn-create {
+            background-color: #FF7F00;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .btn-create:hover {
+            background-color: #e67600;
+        }
+        .btn-update, .btn-delete {
+            background-color: #FF7F00;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        .btn-update:hover, .btn-delete:hover {
+            background-color: #e67600;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container">
+        <div class="d-flex justify-content-end">
+            <a href="{% url 'user_create' %}" class="btn btn-create">Create User</a>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h1>User Management</h1>
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+                <table class="table table-dark table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Phone Number</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.first_name }}</td>
+                            <td>{{ user.last_name }}</td>
+                            <td>{{ user.phone_number }}</td>
+                            <td>{{ user.role.name }}</td>
+                            <td>
+                                <a href="{% url 'user_update' user.id %}" class="btn btn-update btn-sm">Update</a>
+                                <a href="{% url 'user_delete' user.id %}" class="btn btn-delete btn-sm" onclick="return confirmDelete()">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function confirmDelete() {
+            return confirm("Do you really want to delete this user?");
+        }
+    </script>
+</body>
+</html>

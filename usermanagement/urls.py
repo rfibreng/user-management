@@ -21,6 +21,12 @@ from rbac.views import *
 urlpatterns = [
     # path("admin/", admin.site.urls),
     path('', home_view, name='home'),
+    path('logout/', logout_view, name='logout'),
     path('404/', custom_404, name='404'),
     path('login/', login_view, name='login'),
+
+    path('users/', user_list_view, name='user_list'),
+    path('users/delete/<int:user_id>/', user_delete_view, name='user_delete'),
+    path('users/update/<int:user_id>/', user_update_view, name='user_update'),
+    path('users/create/', user_create_view, name='user_create'),
 ]
