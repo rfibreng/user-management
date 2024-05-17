@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
+def custom_404(request):
+    return render(request, '404.html', status=404)
 
 def login_view(request):
     if request.user.is_authenticated:
