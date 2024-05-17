@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #191a1dff;
+            background-image: url('/static/assets/bg.png');
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .login-card {
+            background-color: #2d3133;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        .login-card img {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+        .login-card .form-control {
+            background-color: #444;
+            color: white;
+            border: 1px solid #555;
+        }
+        .login-card .form-control::placeholder {
+            color: #bbb;
+        }
+        .login-card .btn {
+            background-color: #FF7F00;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .login-card .btn:hover {
+            background-color: #e67600;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <img src="/static/assets/eyre.png" alt="Logo">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}" class="text-light">Username :</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}" class="text-light">Password :</label>
+                {{ form.password }}
+            </div>
+            <button type="submit" class="btn btn-block">Login</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
