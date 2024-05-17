@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .models import CustomUser
-from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .models import CustomUser, Role
+from .forms import CustomUserCreationForm, CustomUserChangeForm, RoleForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib import messages
@@ -118,3 +118,55 @@ def user_create_view(request):
     }
     return render(request, 'user_form.html', context)
 
+@login_required(login_url='/login/')
+def role_list_view(request):
+    user_self = request.user
+    is_admin_apps = user_self.role.permissions.filter(name='admin_apps').exists()
+    if not is_admin_apps:
+        return redirect('404')
+    roles = Role.objects.all()
+    return render(request, 'roles.html', {'roles': roles, 'show_admin_menu': is_admin_apps})
+
+@login_required(login_url='/login/')
+def role_create_view(request):
+    user_self = request.user
+    is_admin_apps = user_self.role.permissions.filter(name='admin_apps').exists()
+    if not is_admin_apps:
+        return redirect('404')
+    if request.method == 'POST':
+        form = RoleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Role created successfully.")
+            return redirect('role_list')
+    else:
+        form = RoleForm()
+    return render(request, 'role_form.html', {'form': form, 'show_admin_menu': is_admin_apps})
+
+@login_required(login_url='/login/')
+def role_update_view(request, role_id):
+    user_self = request.user
+    is_admin_apps = user_self.role.permissions.filter(name='admin_apps').exists()
+    if not is_admin_apps:
+        return redirect('404')
+    role = get_object_or_404(Role, id=role_id)
+    if request.method == 'POST':
+        form = RoleForm(request.POST, instance=role)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Role updated successfully.")
+            return redirect('role_list')
+    else:
+        form = RoleForm(instance=role)
+    return render(request, 'role_form.html', {'form': form, 'show_admin_menu': is_admin_apps})
+
+@login_required(login_url='/login/')
+def role_delete_view(request, role_id):
+    user_self = request.user
+    is_admin_apps = user_self.role.permissions.filter(name='admin_apps').exists()
+    if not is_admin_apps:
+        return redirect('404')
+    role = get_object_or_404(Role, id=role_id)
+    role.delete()
+    messages.success(request, "Role deleted successfully.")
+    return redirect('role_list')

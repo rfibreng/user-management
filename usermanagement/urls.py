@@ -29,4 +29,9 @@ urlpatterns = [
     path('users/delete/<int:user_id>/', user_delete_view, name='user_delete'),
     path('users/update/<int:user_id>/', user_update_view, name='user_update'),
     path('users/create/', user_create_view, name='user_create'),
+
+    path('roles/', role_list_view, name='role_list'),
+    path('roles/create/', role_create_view, name='role_create'),
+    path('roles/update/<int:role_id>/', role_update_view, name='role_update'),
+    path('roles/delete/<int:role_id>/', role_delete_view, name='role_delete'),
 ]
