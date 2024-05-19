@@ -83,7 +83,7 @@
         <div class="menu-container">
             {% if 'dashboard' in permissions %}
             <div class="card">
-                <a href="#">
+                <a href="{{ dashboard_url }}">
                     <i class="fas fa-tachometer-alt"></i>
                     <div class="card-title">Dashboard</div>
                 </a>
@@ -91,7 +91,7 @@
             {% endif %}
             {% if 'data_modeler' in permissions %}
             <div class="card">
-                <a href="#">
+                <a href="{{ data_modeler_url }}">
                     <i class="fas fa-project-diagram"></i>
                     <div class="card-title">Data Modeler</div>
                 </a>
@@ -99,7 +99,7 @@
             {% endif %}
             {% if 'data_processor' in permissions %}
             <div class="card">
-                <a href="#">
+                <a href="{{ data_processor_url }}">
                     <i class="fas fa-cogs"></i>
                     <div class="card-title">Data Processor</div>
                 </a>
@@ -107,7 +107,7 @@
             {% endif %}
             {% if 'starrocks' in permissions %}
             <div class="card">
-                <a href="#">
+                <a href="{{ starrocks_url }}">
                     <i class="fas fa-star"></i>
                     <div class="card-title">Starrocks</div>
                 </a>
@@ -115,7 +115,7 @@
             {% endif %}
             {% if 'airflow' in permissions %}
             <div class="card">
-                <a href="#">
+                <a href="{{ airflow_url }}">
                     <i class="fas fa-wind"></i>
                     <div class="card-title">Airflow</div>
                 </a>

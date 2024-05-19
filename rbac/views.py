@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
@@ -40,7 +41,12 @@ def home_view(request):
     permissions = user.role.permissions.values_list('name', flat=True)
     context = {
         'show_admin_menu': 'admin_apps' in permissions,
-        'permissions': permissions
+        'permissions': permissions,
+        'dashboard_url': os.getenv('DASHBOARD_URL', '#'),
+        'data_modeler_url': os.getenv('DATA_MODELER_URL', '#'),
+        'data_processor_url': os.getenv('DATA_PROCESSOR_URL', '#'),
+        'starrocks_url': os.getenv('STARROCKS_URL', '#'),
+        'airflow_url': os.getenv('AIRFLOW_URL', '#')
     }
     return render(request, 'home.html', context)
 
