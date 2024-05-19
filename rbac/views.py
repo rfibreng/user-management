@@ -7,6 +7,7 @@ from .forms import CustomUserCreationForm, CustomUserChangeForm, RoleForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 def logout_view(request):
     logout(request)
@@ -47,11 +48,23 @@ def user_list_view(request):
     is_admin_apps = user_self.role.permissions.filter(name='admin_apps').exists()
     if not is_admin_apps:
         return redirect('404')
+    
+    query = request.GET.get('q', '')
     User = get_user_model()
-    users = User.objects.all()
+    
+    if query:
+        users = User.objects.filter(username__icontains=query)
+    else:
+        users = User.objects.all()
+
+    paginator = Paginator(users, 10)  # Show 10 users per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
         'show_admin_menu': is_admin_apps,
-        'users': users
+        'page_obj': page_obj,
+        'query': query,
     }
     return render(request, 'users.html', context)
 
