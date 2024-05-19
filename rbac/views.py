@@ -57,7 +57,7 @@ def user_list_view(request):
     else:
         users = User.objects.all()
 
-    paginator = Paginator(users, 10)  # Show 10 users per page
+    paginator = Paginator(users, 20)  # Show 10 users per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -137,8 +137,17 @@ def role_list_view(request):
     is_admin_apps = user_self.role.permissions.filter(name='admin_apps').exists()
     if not is_admin_apps:
         return redirect('404')
+    
     roles = Role.objects.all()
-    return render(request, 'roles.html', {'roles': roles, 'show_admin_menu': is_admin_apps})
+    paginator = Paginator(roles, 20)  # Show 20 roles per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'show_admin_menu': is_admin_apps,
+        'page_obj': page_obj,
+    }
+    return render(request, 'roles.html', context)
 
 @login_required(login_url='/login/')
 def role_create_view(request):
