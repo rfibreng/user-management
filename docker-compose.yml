@@ -13,5 +13,20 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  web:
+    build: .
+    container_name: django_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DJANGO_DEBUG: 'True'
+      DASHBOARD_URL: 'http://dashboard.url'
+      DATA_MODELER_URL: 'http://data_modeler.url'
+      DATA_PROCESSOR_URL: 'http://data_processor.url'
+      STARROCKS_URL: 'http://starrocks.url'
+      AIRFLOW_URL: 'http://airflow.url'
+
 volumes:
   postgres_data:

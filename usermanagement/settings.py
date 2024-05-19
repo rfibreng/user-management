@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'user_management',     # Name of the PostgreSQL database
         'USER': 'myuser',   # Username for the PostgreSQL user
         'PASSWORD': 'mypassword',  # Password for the PostgreSQL user
-        'HOST': 'localhost',  # Set the host to the PostgreSQL server (e.g., 'localhost')
+        'HOST': 'db',  # Set the host to the PostgreSQL server (e.g., 'localhost')
         'PORT': '',          # Leave empty to use the default PostgreSQL port (5432)
     }
 }
