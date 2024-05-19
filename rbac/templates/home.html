@@ -6,6 +6,7 @@
     <title>Eyre</title>
     <link rel="icon" type="image/x-icon" href="/static/assets/rect1.png">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             background-color: #191a1dff;
@@ -34,32 +35,92 @@
         }
         .container {
             display: flex;
-            flex: 1;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            margin-top: 20px;
+        }
+        .eyre-logo {
+            width: 10%; /* 2x bigger */
+            margin-bottom: 40px;
         }
         .card {
             background-color: #2d3133;
             border: none;
             border-radius: 10px;
-            width: 100%;
-            max-width: 600px;
-            padding: 20px;
+            padding: 48px 32px; /* 3x bigger */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .card .card-body {
             color: white;
+            text-align: center;
+            margin: 20px;
+            width: 250px; /* Set a width for consistency */
+        }
+        .card i {
+            font-size: 120px; /* 3x bigger */
+            margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 19px; /* 3x bigger */
+        }
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .card a {
+            color: white;
+            text-decoration: none;
+        }
+        .card a:hover {
+            text-decoration: none;
+            color: #FF7F00;
         }
     </style>
 </head>
 <body>
     {% include 'navbar.html' %}
     <div class="container">
-        <div class="card">
-            <div class="card-body">
-                <h1>Welcome to the Home Page</h1>
-                <p>If you see this message, you are authenticated.</p>
+        <img src="/static/assets/rect1.png" alt="Eyre Logo" class="eyre-logo">
+        <div class="menu-container">
+            {% if 'dashboard' in permissions %}
+            <div class="card">
+                <a href="#">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <div class="card-title">Dashboard</div>
+                </a>
             </div>
+            {% endif %}
+            {% if 'data_modeler' in permissions %}
+            <div class="card">
+                <a href="#">
+                    <i class="fas fa-project-diagram"></i>
+                    <div class="card-title">Data Modeler</div>
+                </a>
+            </div>
+            {% endif %}
+            {% if 'data_processor' in permissions %}
+            <div class="card">
+                <a href="#">
+                    <i class="fas fa-cogs"></i>
+                    <div class="card-title">Data Processor</div>
+                </a>
+            </div>
+            {% endif %}
+            {% if 'starrocks' in permissions %}
+            <div class="card">
+                <a href="#">
+                    <i class="fas fa-star"></i>
+                    <div class="card-title">Starrocks</div>
+                </a>
+            </div>
+            {% endif %}
+            {% if 'airflow' in permissions %}
+            <div class="card">
+                <a href="#">
+                    <i class="fas fa-wind"></i>
+                    <div class="card-title">Airflow</div>
+                </a>
+            </div>
+            {% endif %}
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

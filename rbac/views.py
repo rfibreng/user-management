@@ -37,8 +37,10 @@ def login_view(request):
 @login_required(login_url='/login/')
 def home_view(request):
     user = request.user
+    permissions = user.role.permissions.values_list('name', flat=True)
     context = {
-        'show_admin_menu': user.role.permissions.filter(name='admin_apps').exists()
+        'show_admin_menu': 'admin_apps' in permissions,
+        'permissions': permissions
     }
     return render(request, 'home.html', context)
 
