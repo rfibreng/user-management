@@ -5,7 +5,7 @@ db_params = {
     'dbname': 'postgres',  # Connect to the default PostgreSQL database
     'user': 'myuser',  # Replace with your PostgreSQL username
     'password': 'mypassword',  # Replace with your PostgreSQL password
-    'host': 'localhost',  # Replace with your PostgreSQL host
+    'host': 'db',  # Replace with your PostgreSQL host
     'port': '5432',  # Replace with your PostgreSQL port
 }
 
