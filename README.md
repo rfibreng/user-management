@@ -27,7 +27,7 @@ Follow these steps to set up the project:
 
     ```sh
     docker exec django_app python init_db.py
-    docker exec django_app python manage.py makemigration
+    docker exec django_app python manage.py makemigrations
     docker exec django_app python manage.py migrate
     ```
 

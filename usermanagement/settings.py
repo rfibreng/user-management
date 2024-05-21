@@ -135,3 +135,11 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
 }
+
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '[::1]',
+    '34.128.103.189',  # Add your server's IP address here
+    # Add any other hostnames or IP addresses you need
+]
