@@ -81,19 +81,27 @@
     <div class="container">
         <img src="/static/assets/rect1.png" alt="Eyre Logo" class="eyre-logo">
         <div class="menu-container">
-            {% if 'dashboard' in permissions %}
+            {% if 'hdfs' in permissions %}
             <div class="card">
-                <a href="{{ dashboard_url }}">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <div class="card-title">Dashboard</div>
+                <a href="{{ hdfs_url }}">
+                    <i class="fas fa-database"></i>
+                    <div class="card-title">Data Lake</div>
                 </a>
             </div>
             {% endif %}
-            {% if 'data_modeler' in permissions %}
+            {% if 'starrocks' in permissions %}
             <div class="card">
-                <a href="{{ data_modeler_url }}">
-                    <i class="fas fa-project-diagram"></i>
-                    <div class="card-title">Data Modeler</div>
+                <a href="{{ starrocks_url }}">
+                    <i class="fas fa-star"></i>
+                    <div class="card-title">Data Werehouse</div>
+                </a>
+            </div>
+            {% endif %}
+            {% if 'airflow' in permissions %}
+            <div class="card">
+                <a href="{{ airflow_url }}">
+                    <i class="fas fa-wind"></i>
+                    <div class="card-title">Orchestrator</div>
                 </a>
             </div>
             {% endif %}
@@ -105,19 +113,19 @@
                 </a>
             </div>
             {% endif %}
-            {% if 'starrocks' in permissions %}
+            {% if 'data_modeler' in permissions %}
             <div class="card">
-                <a href="{{ starrocks_url }}">
-                    <i class="fas fa-star"></i>
-                    <div class="card-title">Starrocks</div>
+                <a href="{{ data_modeler_url }}">
+                    <i class="fas fa-project-diagram"></i>
+                    <div class="card-title">Data Modeler</div>
                 </a>
             </div>
             {% endif %}
-            {% if 'airflow' in permissions %}
+            {% if 'dashboard' in permissions %}
             <div class="card">
-                <a href="{{ airflow_url }}">
-                    <i class="fas fa-wind"></i>
-                    <div class="card-title">Airflow</div>
+                <a href="{{ dashboard_url }}">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <div class="card-title">Dashboard</div>
                 </a>
             </div>
             {% endif %}

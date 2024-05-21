@@ -42,6 +42,7 @@ def home_view(request):
     context = {
         'show_admin_menu': 'admin_apps' in permissions,
         'permissions': permissions,
+        'hdfs_url': os.getenv('HDFS_URL', '#'),
         'dashboard_url': os.getenv('DASHBOARD_URL', '#'),
         'data_modeler_url': os.getenv('DATA_MODELER_URL', '#'),
         'data_processor_url': os.getenv('DATA_PROCESSOR_URL', '#'),

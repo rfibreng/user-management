@@ -12,7 +12,8 @@ class Command(BaseCommand):
             'airflow',
             'data_modeler',
             'data_processor',
-            'starrocks'
+            'starrocks',
+            'hdfs'
         ]
 
         # Create permissions
@@ -28,7 +29,8 @@ class Command(BaseCommand):
                 'airflow',
                 'data_modeler',
                 'data_processor',
-                'starrocks'
+                'starrocks',
+                'hdfs'
             ],
             'viewer': [
                 'dashboard'

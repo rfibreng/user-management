@@ -22,11 +22,12 @@ services:
       - db
     environment:
       DJANGO_DEBUG: 'True'
-      DASHBOARD_URL: 'http://dashboard.url'
-      DATA_MODELER_URL: 'http://data_modeler.url'
-      DATA_PROCESSOR_URL: 'http://data_processor.url'
-      STARROCKS_URL: 'http://starrocks.url'
-      AIRFLOW_URL: 'http://airflow.url'
+      HDFS_URL: "#"
+      DASHBOARD_URL: '#'
+      DATA_MODELER_URL: '#'
+      DATA_PROCESSOR_URL: '#'
+      STARROCKS_URL: '#'
+      AIRFLOW_URL: '#'
 
 volumes:
   postgres_data:
