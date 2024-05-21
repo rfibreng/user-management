@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser, Role
-from .forms import CustomUserCreationForm, CustomUserChangeForm, RoleForm
+from .forms import CustomPasswordChangeForm, CustomUserCreationForm, CustomUserChangeForm, RoleForm, UserSettingsForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib import messages
@@ -201,3 +201,33 @@ def role_delete_view(request, role_id):
     role.delete()
     messages.success(request, "Role deleted successfully.")
     return redirect('role_list')
+
+@login_required(login_url='/login/')
+def user_settings_view(request):
+    user = request.user
+    is_admin_apps = user.role.permissions.filter(name='admin_apps').exists()
+    if request.method == 'POST':
+        user_form = UserSettingsForm(request.POST, instance=user)
+        password_form = CustomPasswordChangeForm(user, request.POST)
+        
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, 'Your profile was successfully updated!')
+            return redirect('user_settings')
+        
+        if password_form.is_valid():
+            user = password_form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('user_settings')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        user_form = UserSettingsForm(instance=user)
+        password_form = CustomPasswordChangeForm(user)
+
+    return render(request, 'user_settings.html', {
+        'user_form': user_form,
+        'password_form': password_form, 
+        'show_admin_menu': is_admin_apps
+    })

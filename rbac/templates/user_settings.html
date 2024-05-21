@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eyre</title>
+    <link rel="icon" type="image/x-icon" href="/static/assets/rect1.png">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #191a1dff;
+            background-image: url('/static/assets/bg.png');
+            background-size: cover;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .navbar {
+            width: 100%;
+            background-color: #2d3133;
+        }
+        .navbar .navbar-brand {
+            color: white;
+        }
+        .navbar .nav-link {
+            color: white;
+        }
+        .navbar .nav-link:hover {
+            color: #FF7F00;
+        }
+        .container {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+        }
+        .card {
+            background-color: #2d3133;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        .form-control {
+            background-color: #444;
+            color: white;
+            border: 1px solid #555;
+        }
+        .form-control::placeholder {
+            color: #bbb;
+        }
+        .btn-submit {
+            background-color: #FF7F00;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 100%;
+        }
+        .btn-submit:hover {
+            background-color: #e67600;
+        }
+        .form-group label {
+            color: white;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-text {
+            color: #bbb;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="text-center">User Settings</h1>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in user_form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="form-text">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% if field.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ field.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-submit">Update Profile</button>
+                </form>
+                <h2 class="text-center" style="margin-top: 20px;">Change Password</h2>
+                <form method="post" style="margin-top: 20px;">
+                    {% csrf_token %}
+                    {% for field in password_form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="form-text">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% if field.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ field.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-submit">Change Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.amazonaws.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
