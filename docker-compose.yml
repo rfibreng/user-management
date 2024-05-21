@@ -24,7 +24,7 @@ services:
       DJANGO_DEBUG: 'True'
       HDFS_URL: "#"
       DASHBOARD_URL: '#'
-      DATA_MODELER_URL: 'http://34.128.103.189:8000/data-modeler'
+      DATA_MODELER_URL: 'http://34.128.103.189:8000/data-modeler/'
       DATA_PROCESSOR_URL: 'http://34.128.103.189/#/pds/dataprocessing'
       STARROCKS_URL: '#'
       AIRFLOW_URL: '#'
