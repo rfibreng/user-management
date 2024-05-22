@@ -22,12 +22,12 @@ services:
       - db
     environment:
       DJANGO_DEBUG: 'True'
-      HDFS_URL: "http://34.128.121.103:5001/"
+      HDFS_URL: "http://localhost:5001/"
       DASHBOARD_URL: 'http://34.128.121.103:5000/dashboard/list/'
       DATA_MODELER_URL: 'http://34.128.103.189:8000/data-modeler/'
       DATA_PROCESSOR_URL: 'http://34.128.103.189/#/pds/dataprocessing'
-      STARROCKS_URL: "http://34.128.121.103:5002/"
-      AIRFLOW_URL: "http://34.128.121.103:5003/"
+      STARROCKS_URL: "http://localhost:5002/"
+      AIRFLOW_URL: "http://localhost::5003/"
 
 volumes:
   postgres_data:

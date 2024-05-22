@@ -74,6 +74,14 @@
             text-decoration: none;
             color: #FF7F00;
         }
+        .note {
+            margin-top: 20px;
+            font-size: 16px;
+            text-align: center;
+        }
+        .note i {
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
@@ -129,6 +137,9 @@
                 </a>
             </div>
             {% endif %}
+        </div>
+        <div class="note">
+            <i class="fas fa-info-circle"></i> For <strong>Data Lake</strong>, <strong>Data Werehouse</strong>, and <strong>Orchestrator</strong> you need to do an SSH tunnel to access the application.
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
