@@ -45,7 +45,7 @@ def backchannel_logout(request):
         except User.DoesNotExist:
             return JsonResponse({"error": "User not found"}, status=404)
 
-        return JsonResponse({"success": "User logged out successfully"}, status=200)
+        return redirect('home')
     
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
