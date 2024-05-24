@@ -72,7 +72,7 @@ def callback(request):
 
     # Create or update the user in the Django database
     user, created = CustomUser.objects.get_or_create(username=username, defaults={
-        'email': email,
+        'email': email if email is not None else f'{username}@gmail.com',
         'username':username,
         'first_name': first_name if first_name is not None else username,
         'last_name': last_name if last_name is not None else username,
