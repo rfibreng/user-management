@@ -45,13 +45,12 @@ def backchannel_logout(request):
         except User.DoesNotExist:
             return JsonResponse({"error": "User not found"}, status=404)
 
-        return redirect('home')
+        return JsonResponse({"success": "User logged out successfully"}, status=200)
     
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
 def logout_view(request):
     logout(request)
-    
     logout_url = (
         f"{settings.SSO_BASE_URL}/realms/{settings.SSO_REALM}/protocol/openid-connect/logout"
         f"?client_id={settings.SSO_CLIENT_ID}"
