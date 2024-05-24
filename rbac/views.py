@@ -73,6 +73,7 @@ def callback(request):
     email = json_token.get('email')
     first_name = json_token.get('given_name')
     last_name = json_token.get('family_name')
+    print(json_token)
 
     if not username:
         return HttpResponse("Error: No username found in the token.", status=400)
