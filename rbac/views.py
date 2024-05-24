@@ -75,7 +75,7 @@ def callback(request):
         'email': email,
         'first_name': first_name,
         'last_name': last_name,
-        'role': 'admin',
+        'role': Role.objects.get(name='admin'),
     })
 
     if not created:
