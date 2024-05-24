@@ -53,8 +53,6 @@ def logout_view(request):
     logout(request)
     logout_url = (
         f"{settings.SSO_BASE_URL}/realms/{settings.SSO_REALM}/protocol/openid-connect/logout"
-        f"?client_id={settings.SSO_CLIENT_ID}"
-        f"&post_logout_redirect_uri={settings.SSO_POST_LOGOUT_REDIRECT_URI}"
     )
     
     return redirect(logout_url)
