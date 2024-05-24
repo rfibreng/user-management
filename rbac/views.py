@@ -9,6 +9,12 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib import messages
 from django.core.paginator import Paginator
+from urllib.parse import urlencode
+from usermanagement import settings
+import requests
+import base64
+from django.http import HttpResponse
+import json
 
 def logout_view(request):
     logout(request)
@@ -17,23 +23,107 @@ def logout_view(request):
 def custom_404(request):
     return render(request, '404.html', status=404)
 
+def callback(request):
+    code = request.GET.get('code')
+    if not code:
+        return HttpResponse("Error: No code parameter found in the request.", status=400)
+
+    token_url = f"{settings.SSO_BASE_URL}/realms/{settings.SSO_REALM}/protocol/openid-connect/token"
+    data = {
+        'grant_type': 'authorization_code',
+        'client_id': settings.SSO_CLIENT_ID,
+        'client_secret': settings.SSO_CLIENT_SECRET,
+        'code': code,
+        'redirect_uri': settings.SSO_REDIRECT_URI
+    }
+
+    response = requests.post(token_url, data=data)
+    if response.status_code != 200:
+        return HttpResponse("Error: Failed to retrieve token from SSO provider.", status=response.status_code)
+
+    json_response = response.json()
+    access_token = json_response.get('access_token')
+    if not access_token:
+        return HttpResponse("Error: No access token found in the response.", status=400)
+
+    # Decode the JWT token
+    exploded = access_token.split('.')
+    if len(exploded) != 3:
+        return HttpResponse("Error: Invalid access token format.", status=400)
+
+    base64_payload = exploded[1]
+    # Add padding if necessary
+    base64_payload += '=' * (4 - len(base64_payload) % 4)
+    try:
+        decoded_payload = base64.b64decode(base64_payload)
+    except (TypeError, ValueError):
+        return HttpResponse("Error: Failed to decode access token.", status=400)
+
+    json_token = json.loads(decoded_payload)
+
+    # Extract user information from the token
+    username = json_token.get('preferred_username') or json_token.get('sub')
+    email = json_token.get('email')
+    first_name = json_token.get('given_name')
+    last_name = json_token.get('family_name')
+
+    if not username:
+        return HttpResponse("Error: No username found in the token.", status=400)
+
+    # Create or update the user in the Django database
+    user, created = CustomUser.objects.get_or_create(username=username, defaults={
+        'email': email,
+        'first_name': first_name,
+        'last_name': last_name,
+        'role': 'admin',
+    })
+
+    if not created:
+        # Update user details if they already exist
+        user.email = email
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+
+    # Log the user in
+    login(request, user)
+
+    # Redirect to home after successful authentication
+    return redirect('home')
+
+
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('home')  # Redirect to home if the user is already authenticated
 
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('home')  # Redirect to home after successful login
-    else:
-        form = AuthenticationForm()
+    query_params = {
+        'client_id': settings.SSO_CLIENT_ID,
+        'redirect_uri': settings.SSO_REDIRECT_URI,
+        'scope': 'openid',
+        'response_type': 'code'
+    }
+    
+    sso_url = f"{settings.SSO_BASE_URL}/realms/{settings.SSO_REALM}/protocol/openid-connect/auth?{urlencode(query_params)}"
+    
+    return redirect(sso_url)
 
-    return render(request, 'login.html', {'form': form})
+# def login_view(request):
+#     if request.user.is_authenticated:
+#         return redirect('home')  # Redirect to home if the user is already authenticated
+
+#     if request.method == 'POST':
+#         form = AuthenticationForm(request, data=request.POST)
+#         if form.is_valid():
+#             username = form.cleaned_data.get('username')
+#             password = form.cleaned_data.get('password')
+#             user = authenticate(request, username=username, password=password)
+#             if user is not None:
+#                 login(request, user)
+#                 return redirect('home')  # Redirect to home after successful login
+#     else:
+#         form = AuthenticationForm()
+
+#     return render(request, 'login.html', {'form': form})
 
 @login_required(login_url='/login/')
 def home_view(request):

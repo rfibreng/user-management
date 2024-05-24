@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from django.contrib.messages import constants as messages
+import os
+
+SSO_BASE_URL = os.getenv('SSO_BASE_URL')
+SSO_REALM = os.getenv('SSO_REALM')
+SSO_CLIENT_ID = os.getenv('SSO_CLIENT_ID')
+SSO_REDIRECT_URI = os.getenv('SSO_REDIRECT_URI')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
