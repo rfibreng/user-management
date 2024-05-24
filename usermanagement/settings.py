@@ -14,11 +14,11 @@ from pathlib import Path
 from django.contrib.messages import constants as messages
 import os
 
-SSO_BASE_URL = os.getenv('SSO_BASE_URI')
-SSO_REALM = os.getenv('SSO_REALM_MASTER')
-SSO_CLIENT_ID = os.getenv('SSO_CLIENT_ID')
-SSO_REDIRECT_URI = os.getenv('SSO_REDIRECT_URI')
-SSO_CLIENT_SECRET = os.getenv('SSO_CLIENT_SECRET')
+SSO_BASE_URL = 'https://sso.4tz.web.id'
+SSO_REALM = 'master'
+SSO_CLIENT_ID = '123456789fibr'
+SSO_REDIRECT_URI = 'https://appd.4tz.web.id/callback'
+SSO_CLIENT_SECRET = 'Mh7KiMJgCNnFwamDTnpyS6V0Dyck1J03'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
