@@ -25,6 +25,7 @@ urlpatterns = [
     path('404/', custom_404, name='404'),
     path('login/', login_view, name='login'),
     path('callback/', callback, name='callback'),
+    path('backchannel-logout/', backchannel_logout, name='backchannel_logout'),
 
     path('users/', user_list_view, name='user_list'),
     path('users/delete/<int:user_id>/', user_delete_view, name='user_delete'),

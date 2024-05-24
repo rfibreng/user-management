@@ -1,20 +1,53 @@
 import os
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser, Role
 from .forms import CustomPasswordChangeForm, CustomUserCreationForm, CustomUserChangeForm, RoleForm, UserSettingsForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout, update_session_auth_hash
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.core.paginator import Paginator
 from urllib.parse import urlencode
 from usermanagement import settings
 import requests
 import base64
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 import json
+
+def backchannel_logout(request):
+    User = get_user_model()
+    if request.method == 'POST':
+        logout_token = request.POST.get('logout_token')
+        if not logout_token:
+            return JsonResponse({"error": "No logout_token provided"}, status=400)
+        
+        exploded = logout_token.split('.')
+        if len(exploded) != 3:
+            return JsonResponse({"error": "Invalid logout_token format"}, status=400)
+
+        base64_payload = exploded[1]
+        base64_payload += '=' * (4 - len(base64_payload) % 4)
+        try:
+            decoded_payload = base64.b64decode(base64_payload)
+            json_payload = json.loads(decoded_payload)
+        except (TypeError, ValueError, json.JSONDecodeError):
+            return JsonResponse({"error": "Failed to decode logout_token"}, status=400)
+
+        sub = json_payload.get('sub')
+        if not sub:
+            return JsonResponse({"error": "No 'sub' claim found in logout_token"}, status=400)
+
+        try:
+            user = User.objects.get(sso_id=sub)
+            user.logout()
+        except User.DoesNotExist:
+            return JsonResponse({"error": "User not found"}, status=404)
+
+        return JsonResponse({"success": "User logged out successfully"}, status=200)
+    
+    return JsonResponse({"error": "Invalid request method"}, status=405)
 
 def logout_view(request):
     logout(request)
