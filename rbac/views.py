@@ -73,7 +73,12 @@ def callback(request):
     email = json_token.get('email')
     first_name = json_token.get('given_name')
     last_name = json_token.get('family_name')
+    resource_access = json_token.get('resource_access', {})
     print(json_token)
+
+    # Determine the user's role
+    app_roles = resource_access.get(settings.SSO_CLIENT_ID, {}).get('roles', [])
+    app_roles = 'viewer' if len(app_roles) == 0 else app_roles[0]
 
     if not username:
         return HttpResponse("Error: No username found in the token.", status=400)
@@ -84,7 +89,7 @@ def callback(request):
         'username':username,
         'first_name': first_name if first_name is not None else username,
         'last_name': last_name if last_name is not None else username,
-        'role': Role.objects.get(name='admin'),
+        'role': Role.objects.get(name=app_roles),
     })
 
     if not created:
@@ -92,6 +97,7 @@ def callback(request):
         user.email = email if email is not None else user.email
         user.first_name = first_name if first_name is not None else user.first_name
         user.last_name = last_name if last_name is not None else user.last_name
+        user.role = app_roles
         user.save()
 
     # Log the user in
