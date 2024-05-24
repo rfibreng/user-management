@@ -50,25 +50,15 @@ def backchannel_logout(request):
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
 def logout_view(request):
-    # Log out the user from the Django session
     logout(request)
     
-    # Construct the logout URL for the SSO provider
     logout_url = (
         f"{settings.SSO_BASE_URL}/realms/{settings.SSO_REALM}/protocol/openid-connect/logout"
         f"?client_id={settings.SSO_CLIENT_ID}"
         f"&post_logout_redirect_uri={settings.SSO_POST_LOGOUT_REDIRECT_URI}"
     )
     
-    # Perform the GET request to the logout URL
-    response = requests.get(logout_url)
-    
-    # Optionally, you can check the response status if needed
-    if response.status_code != 200:
-        return HttpResponse("Error: Failed to log out from SSO provider.", status=response.status_code)
-
-    # Redirect the user to the login page after successful logout
-    return redirect('login')
+    return redirect(logout_url)
 
 def custom_404(request):
     return render(request, '404.html', status=404)
