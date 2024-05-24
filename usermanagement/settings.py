@@ -19,6 +19,7 @@ SSO_REALM = 'master'
 SSO_CLIENT_ID = '123456789fibr'
 SSO_REDIRECT_URI = 'http://34.128.103.189:8000/callback/'
 SSO_CLIENT_SECRET = 'Mh7KiMJgCNnFwamDTnpyS6V0Dyck1J03'
+SSO_POST_LOGOUT_REDIRECT_URI = 'http://34.128.103.189:8000/'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
