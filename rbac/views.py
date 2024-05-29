@@ -181,6 +181,7 @@ def home_view(request):
     permissions = user.role.permissions.values_list('name', flat=True)
     context = {
         'show_admin_menu': 'admin_apps' in permissions,
+        'show_help_desk_management': 'help_desk_apps' in permissions,
         'permissions': permissions,
         'hdfs_url': os.getenv('HDFS_URL', '#'),
         'dashboard_url': os.getenv('DASHBOARD_URL', '#'),
@@ -195,6 +196,7 @@ def home_view(request):
 def user_list_view(request):
     user_self = request.user
     is_admin_apps = user_self.role.permissions.filter(name='admin_apps').exists()
+    is_help_desk = user_self.role.permissions.filter(name='help_desk_apps').exists()
     if not is_admin_apps:
         return redirect('404')
     
@@ -212,6 +214,7 @@ def user_list_view(request):
 
     context = {
         'show_admin_menu': is_admin_apps,
+        'show_help_desk_management': is_help_desk,
         'page_obj': page_obj,
         'query': query,
     }
@@ -239,6 +242,7 @@ def user_delete_view(request, user_id):
 def user_update_view(request, user_id):
     user_self = request.user
     is_admin_apps = user_self.role.permissions.filter(name='admin_apps').exists()
+    is_help_desk = user_self.role.permissions.filter(name='help_desk_apps').exists()
     if not is_admin_apps:
         return redirect('404')
     user = get_object_or_404(CustomUser, id=user_id)
@@ -257,6 +261,7 @@ def user_update_view(request, user_id):
         form = CustomUserChangeForm(instance=user)
     context = {
         'show_admin_menu': is_admin_apps,
+        'show_help_desk_management': is_help_desk,
         'form': form
     }
     return render(request, 'user_form.html', context)
@@ -265,6 +270,7 @@ def user_update_view(request, user_id):
 def user_create_view(request):
     user_self = request.user
     is_admin_apps = user_self.role.permissions.filter(name='admin_apps').exists()
+    is_help_desk = user_self.role.permissions.filter(name='help_desk_apps').exists()
     if not is_admin_apps:
         return redirect('404')
     if request.method == 'POST':
@@ -276,6 +282,7 @@ def user_create_view(request):
         form = CustomUserCreationForm()
     context = {
         'show_admin_menu': is_admin_apps,
+        'show_help_desk_management': is_help_desk,
         'form': form
     }
     return render(request, 'user_form.html', context)
@@ -284,6 +291,7 @@ def user_create_view(request):
 def role_list_view(request):
     user_self = request.user
     is_admin_apps = user_self.role.permissions.filter(name='admin_apps').exists()
+    is_help_desk = user_self.role.permissions.filter(name='help_desk_apps').exists()
     if not is_admin_apps:
         return redirect('404')
     
@@ -294,6 +302,7 @@ def role_list_view(request):
 
     context = {
         'show_admin_menu': is_admin_apps,
+        'show_help_desk_management': is_help_desk,
         'page_obj': page_obj,
     }
     return render(request, 'roles.html', context)
@@ -302,6 +311,7 @@ def role_list_view(request):
 def role_create_view(request):
     user_self = request.user
     is_admin_apps = user_self.role.permissions.filter(name='admin_apps').exists()
+    is_help_desk = user_self.role.permissions.filter(name='help_desk_apps').exists()
     if not is_admin_apps:
         return redirect('404')
     if request.method == 'POST':
@@ -312,12 +322,13 @@ def role_create_view(request):
             return redirect('role_list')
     else:
         form = RoleForm()
-    return render(request, 'role_form.html', {'form': form, 'show_admin_menu': is_admin_apps})
+    return render(request, 'role_form.html', {'form': form, 'show_admin_menu': is_admin_apps, 'show_help_desk_management': is_help_desk})
 
 @login_required(login_url='/login/')
 def role_update_view(request, role_id):
     user_self = request.user
     is_admin_apps = user_self.role.permissions.filter(name='admin_apps').exists()
+    is_help_desk = user_self.role.permissions.filter(name='help_desk_apps').exists()
     if not is_admin_apps:
         return redirect('404')
     role = get_object_or_404(Role, id=role_id)
@@ -329,7 +340,7 @@ def role_update_view(request, role_id):
             return redirect('role_list')
     else:
         form = RoleForm(instance=role)
-    return render(request, 'role_form.html', {'form': form, 'show_admin_menu': is_admin_apps})
+    return render(request, 'role_form.html', {'form': form, 'show_admin_menu': is_admin_apps, 'show_help_desk_management': is_help_desk})
 
 @login_required(login_url='/login/')
 def role_delete_view(request, role_id):
@@ -346,6 +357,7 @@ def role_delete_view(request, role_id):
 def user_settings_view(request):
     user = request.user
     is_admin_apps = user.role.permissions.filter(name='admin_apps').exists()
+    is_help_desk = user.role.permissions.filter(name='help_desk_apps').exists()
     if request.method == 'POST':
         user_form = UserSettingsForm(request.POST, instance=user)
         password_form = CustomPasswordChangeForm(user, request.POST)
@@ -369,5 +381,6 @@ def user_settings_view(request):
     return render(request, 'user_settings.html', {
         'user_form': user_form,
         'password_form': password_form, 
-        'show_admin_menu': is_admin_apps
+        'show_admin_menu': is_admin_apps,
+        'show_help_desk_management': is_help_desk
     })
