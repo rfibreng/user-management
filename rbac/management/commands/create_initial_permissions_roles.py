@@ -8,6 +8,7 @@ class Command(BaseCommand):
         # Define the permissions
         permissions = [
             'admin_apps',
+            'help_desk_apps',
             'dashboard',
             'airflow',
             'data_modeler',
@@ -26,6 +27,7 @@ class Command(BaseCommand):
             'superadmin': permissions,
             'admin': [
                 'dashboard',
+                'help_desk_apps',
                 'airflow',
                 'data_modeler',
                 'data_processor',
@@ -40,6 +42,9 @@ class Command(BaseCommand):
         # Create roles and assign permissions
         for role_name, perms in roles_permissions.items():
             role, created = Role.objects.get_or_create(name=role_name)
+
+            # Clear existing permissions and update with new ones
+            role.permissions.clear()
             for perm in perms:
                 permission = Permission.objects.get(name=perm)
                 role.permissions.add(permission)
