@@ -20,6 +20,7 @@ services:
       - "4141:8000"
     depends_on:
       - db
+    restart: always
     environment:
       DJANGO_DEBUG: 'True'
       SSO_CLIENT_ID: '123456789fibr'
