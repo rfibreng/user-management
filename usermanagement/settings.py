@@ -14,11 +14,12 @@ from pathlib import Path
 from django.contrib.messages import constants as messages
 import os
 
-SSO_BASE_URL = 'https://sso.4tz.web.id'
-SSO_REALM = 'master'
-SSO_CLIENT_ID = '123456789fibr'
-SSO_REDIRECT_URI = 'http://34.128.103.189:8000/callback/'
-SSO_CLIENT_SECRET = 'Mh7KiMJgCNnFwamDTnpyS6V0Dyck1J03'
+SSO_BASE_URL = os.getenv('SSO_BASE_URI')
+SSO_REALM = os.getenv('SSO_REALM_MASTER')
+SSO_CLIENT_ID = os.getenv('SSO_CLIENT_ID')
+# SSO_REDIRECT_URI = 'http://34.128.103.189:8000/callback/'
+SSO_REDIRECT_URI = os.getenv('SSO_REDIRECT_URI')
+SSO_CLIENT_SECRET = os.getenv('SSO_CLIENT_SECRET')
 SSO_POST_LOGOUT_REDIRECT_URI = 'http://34.128.103.189:8000/backchannel-logout/'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -148,6 +149,6 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '[::1]',
-    '34.128.103.189',  # Add your server's IP address here
+    os.getenv('APPLICATION_HOST'),  # Add your server's IP address here
     # Add any other hostnames or IP addresses you need
 ]

@@ -24,9 +24,10 @@ services:
     restart: always
     environment:
       DJANGO_DEBUG: 'True'
+      APPLICATION_HOST: '34.128.103.189'
       SSO_CLIENT_ID: '123456789fibr'
       SSO_CLIENT_SECRET: 'Mh7KiMJgCNnFwamDTnpyS6V0Dyck1J03'
-      SSO_REDIRECT_URI: 'https://appd.4tz.web.id/callback'
+      SSO_REDIRECT_URI: 'http://34.128.103.189:8000/callback/'
       SSO_BASE_URI: 'https://sso.4tz.web.id'
       SSO_REALM_MASTER: 'master'
       HDFS_URL: "http://localhost:5001/"
