@@ -106,6 +106,7 @@ def callback(request):
     email = json_token.get('email')
     first_name = json_token.get('given_name')
     last_name = json_token.get('family_name')
+    user_id = json_token.get('id')
     resource_access = json_token.get('resource_access', {})
     print(json_token)
 
@@ -128,6 +129,7 @@ def callback(request):
         'first_name': first_name if first_name is not None else username,
         'last_name': last_name if last_name is not None else username,
         'role': role,
+        'user_id':user_id
     })
 
     if not created:
