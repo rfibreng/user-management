@@ -109,6 +109,7 @@ def callback(request):
     user_id = json_token.get('sid')
     resource_access = json_token.get('resource_access', {})
     print(json_token)
+    print(user_id)
 
     # Determine the user's role
     app_roles = resource_access.get(settings.SSO_CLIENT_ID, {}).get('roles', [])
