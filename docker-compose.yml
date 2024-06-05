@@ -24,15 +24,15 @@ services:
     restart: always
     environment:
       DJANGO_DEBUG: 'True'
-      APPLICATION_HOST: '10.70.100.20'
+      APPLICATION_HOST: '10.70.100.25'
       SSO_CLIENT_ID: '123456789fibr'
       SSO_CLIENT_SECRET: 'Mh7KiMJgCNnFwamDTnpyS6V0Dyck1J03'
-      SSO_REDIRECT_URI: 'http://10.70.100.20:4141/callback/'
+      SSO_REDIRECT_URI: 'http://10.70.100.25:4141/callback/'
       SSO_BASE_URI: 'https://sso.4tz.web.id'
       SSO_REALM_MASTER: 'master'
       HDFS_URL: "10.70.100.24:8088"
       DASHBOARD_URL: '10.70.100.24:5000'
-      DATA_MODELER_URL: '10.70.100.20:7777'
+      DATA_MODELER_URL: '10.70.100.25:7777'
       DATA_PROCESSOR_URL: '#'
       STARROCKS_URL: "10.70.100.24:8035"
       AIRFLOW_URL: "10.70.100.24:8089"
