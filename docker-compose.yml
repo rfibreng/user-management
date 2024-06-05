@@ -35,6 +35,8 @@ services:
       DATA_PROCESSOR_URL: 'http://34.128.103.189/#/pds/dataprocessing'
       STARROCKS_URL: "http://localhost:5002/"
       AIRFLOW_URL: "http://localhost:5003/"
+      HELP_DESK_URL: "https://dev05.overtech.id/"
+      HELP_DESK_MANAGEMENT_URL: "https://dev05.overtech.id/cms/admin/login"
 
 volumes:
   postgres_data:

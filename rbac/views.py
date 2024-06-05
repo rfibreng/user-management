@@ -16,6 +16,9 @@ import base64
 from django.http import HttpResponse, JsonResponse
 import json
 
+HELP_DESK_URL = os.getenv('HELP_DESK_URL')
+HELP_DESK_MANAGEMENT_URL = os.getenv('HELP_DESK_MANAGEMENT_URL')
+
 def backchannel_logout(request):
     User = get_user_model()
     if request.method == 'POST':
@@ -188,7 +191,9 @@ def home_view(request):
         'data_modeler_url': os.getenv('DATA_MODELER_URL', '#'),
         'data_processor_url': os.getenv('DATA_PROCESSOR_URL', '#'),
         'starrocks_url': os.getenv('STARROCKS_URL', '#'),
-        'airflow_url': os.getenv('AIRFLOW_URL', '#')
+        'airflow_url': os.getenv('AIRFLOW_URL', '#'),
+        'help_desk_url': HELP_DESK_URL,
+        'help_desk_management_url':HELP_DESK_MANAGEMENT_URL
     }
     return render(request, 'home.html', context)
 
@@ -217,6 +222,8 @@ def user_list_view(request):
         'show_help_desk_management': is_help_desk,
         'page_obj': page_obj,
         'query': query,
+        'help_desk_url': HELP_DESK_URL,
+        'help_desk_management_url':HELP_DESK_MANAGEMENT_URL
     }
     return render(request, 'users.html', context)
 
@@ -262,7 +269,9 @@ def user_update_view(request, user_id):
     context = {
         'show_admin_menu': is_admin_apps,
         'show_help_desk_management': is_help_desk,
-        'form': form
+        'form': form,
+        'help_desk_url': HELP_DESK_URL,
+        'help_desk_management_url':HELP_DESK_MANAGEMENT_URL
     }
     return render(request, 'user_form.html', context)
 
@@ -283,7 +292,9 @@ def user_create_view(request):
     context = {
         'show_admin_menu': is_admin_apps,
         'show_help_desk_management': is_help_desk,
-        'form': form
+        'form': form,
+        'help_desk_url': HELP_DESK_URL,
+        'help_desk_management_url':HELP_DESK_MANAGEMENT_URL
     }
     return render(request, 'user_form.html', context)
 
@@ -304,6 +315,8 @@ def role_list_view(request):
         'show_admin_menu': is_admin_apps,
         'show_help_desk_management': is_help_desk,
         'page_obj': page_obj,
+        'help_desk_url': HELP_DESK_URL,
+        'help_desk_management_url':HELP_DESK_MANAGEMENT_URL
     }
     return render(request, 'roles.html', context)
 
@@ -322,7 +335,9 @@ def role_create_view(request):
             return redirect('role_list')
     else:
         form = RoleForm()
-    return render(request, 'role_form.html', {'form': form, 'show_admin_menu': is_admin_apps, 'show_help_desk_management': is_help_desk})
+    return render(request, 'role_form.html', {'form': form, 'show_admin_menu': is_admin_apps, 'show_help_desk_management': is_help_desk,
+        'help_desk_url': HELP_DESK_URL,
+        'help_desk_management_url':HELP_DESK_MANAGEMENT_URL})
 
 @login_required(login_url='/login/')
 def role_update_view(request, role_id):
@@ -340,7 +355,9 @@ def role_update_view(request, role_id):
             return redirect('role_list')
     else:
         form = RoleForm(instance=role)
-    return render(request, 'role_form.html', {'form': form, 'show_admin_menu': is_admin_apps, 'show_help_desk_management': is_help_desk})
+    return render(request, 'role_form.html', {'form': form, 'show_admin_menu': is_admin_apps, 'show_help_desk_management': is_help_desk,
+        'help_desk_url': HELP_DESK_URL,
+        'help_desk_management_url':HELP_DESK_MANAGEMENT_URL})
 
 @login_required(login_url='/login/')
 def role_delete_view(request, role_id):
@@ -382,5 +399,7 @@ def user_settings_view(request):
         'user_form': user_form,
         'password_form': password_form, 
         'show_admin_menu': is_admin_apps,
-        'show_help_desk_management': is_help_desk
+        'show_help_desk_management': is_help_desk,
+        'help_desk_url': HELP_DESK_URL,
+        'help_desk_management_url':HELP_DESK_MANAGEMENT_URL
     })
