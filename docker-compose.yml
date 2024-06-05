@@ -30,12 +30,12 @@ services:
       SSO_REDIRECT_URI: 'http://10.70.100.25:4141/callback/'
       SSO_BASE_URI: 'https://single.sysdev.id/'
       SSO_REALM_MASTER: 'single'
-      HDFS_URL: "10.70.100.24:8088"
-      DASHBOARD_URL: '10.70.100.24:5000'
-      DATA_MODELER_URL: '10.70.100.8:7777'
+      HDFS_URL: "http://10.70.100.24:8089/"
+      DASHBOARD_URL: 'http://10.70.100.24:5000/'
+      DATA_MODELER_URL: 'http://10.70.100.8:7777/'
       DATA_PROCESSOR_URL: '#'
-      STARROCKS_URL: "10.70.100.24:8035"
-      AIRFLOW_URL: "10.70.100.24:8089"
+      STARROCKS_URL: "http://10.70.100.24:8035/"
+      AIRFLOW_URL: "http://10.70.100.24:8089/"
       HELP_DESK_URL: "https://dev05.overtech.id/"
       HELP_DESK_MANAGEMENT_URL: "https://dev05.overtech.id/cms/admin/login"
       POSTGRESQL_HOST: "db"
