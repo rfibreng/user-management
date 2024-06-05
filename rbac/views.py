@@ -106,7 +106,7 @@ def callback(request):
     email = json_token.get('email')
     first_name = json_token.get('given_name')
     last_name = json_token.get('family_name')
-    user_id = json_token.get('id')
+    user_id = json_token.get('sid')
     resource_access = json_token.get('resource_access', {})
     print(json_token)
 
