@@ -1,12 +1,13 @@
 import psycopg2
+import os
 
 # Database connection parameters
 db_params = {
     'dbname': 'postgres',  # Connect to the default PostgreSQL database
-    'user': 'myuser',  # Replace with your PostgreSQL username
-    'password': 'mypassword',  # Replace with your PostgreSQL password
-    'host': 'db',  # Replace with your PostgreSQL host
-    'port': '5432',  # Replace with your PostgreSQL port
+    'user': os.getenv("POSTGRESQL_USER"),  # Replace with your PostgreSQL username
+    'password': os.getenv("POSTGRESQL_PASSWORD"),  # Replace with your PostgreSQL password
+    'host': os.getenv("POSTGRESQL_HOST"),  # Replace with your PostgreSQL host
+    'port': os.getenv("POSTGRESQL_PORT"),  # Replace with your PostgreSQL port
 }
 
 # Create a connection to the default PostgreSQL database

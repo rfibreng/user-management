@@ -37,6 +37,10 @@ services:
       AIRFLOW_URL: "http://localhost:5003/"
       HELP_DESK_URL: "https://dev05.overtech.id/"
       HELP_DESK_MANAGEMENT_URL: "https://dev05.overtech.id/cms/admin/login"
+      POSTGRESQL_HOST: "db"
+      POSTGRESQL_PORT: "5432"
+      POSTGRESQL_USER: "myuser"
+      POSTGRESQL_PASSWORD: "mypassword"
 
 volumes:
   postgres_data:
