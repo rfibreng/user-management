@@ -68,64 +68,63 @@ def notification_user(request):
     try:
         User = get_user_model()
         print(request.body)
-        if request.method == 'POST':
+        try:
+            payload = json.loads(request.body)
+            data = payload.get('data')
+            
+            status = data.get('status')
+            user_id = data.get('id')
+            username = data.get('username', '')
+            email = data.get('email', '')
+            first_name = data.get('first_name', '')
+            last_name = data.get('last_name', '')
+            role_name = data.get('role', 'viewer')
+            
+            # Ensure role exists, if not set to default 'viewer'
             try:
-                payload = json.loads(request.body)
-                data = payload.get('data')
-                
-                status = data.get('status')
-                user_id = data.get('id')
-                username = data.get('username', '')
-                email = data.get('email', '')
-                first_name = data.get('first_name', '')
-                last_name = data.get('last_name', '')
-                role_name = data.get('role', 'viewer')
-                
-                # Ensure role exists, if not set to default 'viewer'
+                role = Role.objects.get(name=role_name)
+            except Role.DoesNotExist:
+                role, created = Role.objects.get_or_create(name='viewer')
+            
+            if status == 'user add':
+                user, created = User.objects.update_or_create(
+                    user_id=user_id,
+                    defaults={
+                        'username': username,
+                        'email': email,
+                        'first_name': first_name,
+                        'last_name': last_name,
+                        'role': role
+                    }
+                )
+                if created:
+                    user.set_unusable_password()  # Or set a default password if needed
+                    user.save()
+
+            elif status == 'user update':
                 try:
-                    role = Role.objects.get(name=role_name)
-                except Role.DoesNotExist:
-                    role, created = Role.objects.get_or_create(name='viewer')
-                
-                if status == 'user add':
-                    user, created = User.objects.update_or_create(
-                        user_id=user_id,
-                        defaults={
-                            'username': username,
-                            'email': email,
-                            'first_name': first_name,
-                            'last_name': last_name,
-                            'role': role
-                        }
-                    )
-                    if created:
-                        user.set_unusable_password()  # Or set a default password if needed
-                        user.save()
+                    user = User.objects.get(user_id=user_id)
+                    user.username = username
+                    user.email = email
+                    user.first_name = first_name
+                    user.last_name = last_name
+                    user.role = role
+                    user.save()
+                except User.DoesNotExist:
+                    return JsonResponse({'error': 'User not found'}, status=404)
 
-                elif status == 'user update':
-                    try:
-                        user = User.objects.get(user_id=user_id)
-                        user.username = username
-                        user.email = email
-                        user.first_name = first_name
-                        user.last_name = last_name
-                        user.role = role
-                        user.save()
-                    except User.DoesNotExist:
-                        return JsonResponse({'error': 'User not found'}, status=404)
+            elif status == 'user remove':
+                try:
+                    user = User.objects.get(user_id=user_id)
+                    user.delete()
+                except User.DoesNotExist:
+                    return JsonResponse({'error': 'User not found'}, status=404)
 
-                elif status == 'user remove':
-                    try:
-                        user = User.objects.get(user_id=user_id)
-                        user.delete()
-                    except User.DoesNotExist:
-                        return JsonResponse({'error': 'User not found'}, status=404)
-
-                return JsonResponse({'status': 'success'}, status=200)
-            except json.JSONDecodeError:
-                return JsonResponse({'error': 'Invalid JSON'}, status=400)
-            except Exception as e:
-                return JsonResponse({'error': str(e)}, status=500)
+            return JsonResponse({'status': 'success'}, status=200)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
     except Exception as e:
         print(e)
 
