@@ -65,47 +65,10 @@ def custom_404(request):
 
 def notification_user(request):
     User = get_user_model()
-    code = request.GET.get('code')
-    if not code:
-        return HttpResponse("Error: No code parameter found in the request.", status=400)
-
-    token_url = f"{settings.SSO_BASE_URL}/realms/{settings.SSO_REALM}/protocol/openid-connect/token"
-    data = {
-        'grant_type': 'authorization_code',
-        'client_id': settings.SSO_CLIENT_ID,
-        'client_secret': settings.SSO_CLIENT_SECRET,
-        'code': code,
-        'redirect_uri': settings.SSO_REDIRECT_URI
-    }
-
-    response = requests.post(token_url, data=data)
-    if response.status_code != 200:
-        return HttpResponse("Error: Failed to retrieve token from SSO provider.", status=response.status_code)
-    
-    json_response = response.json()
-    access_token = json_response.get('access_token')
-    if not access_token:
-        return HttpResponse("Error: No access token found in the response.", status=400)
-
-    # Decode the JWT token
-    exploded = access_token.split('.')
-    if len(exploded) != 3:
-        return HttpResponse("Error: Invalid access token format.", status=400)
-
-    base64_payload = exploded[1]
-    # Add padding if necessary
-    base64_payload += '=' * (4 - len(base64_payload) % 4)
-    try:
-        decoded_payload = base64.b64decode(base64_payload)
-    except (TypeError, ValueError):
-        return HttpResponse("Error: Failed to decode access token.", status=400)
-
-    json_token = json.loads(decoded_payload)
-
     if request.method == 'POST':
         try:
             payload = json.loads(request.body)
-            data = json_token
+            data = payload.get('data')
             
             status = data.get('status')
             user_id = data.get('id')
