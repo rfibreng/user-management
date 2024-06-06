@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     role = models.ForeignKey('Role', on_delete=models.CASCADE)
-    user_id = models.CharField(max_length=20, blank=True, null=True, unique=True)
+    user_id = models.CharField(max_length=100, blank=True, null=True, unique=True)
 
 
 class Permission(models.Model):
