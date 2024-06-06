@@ -27,7 +27,7 @@ services:
       APPLICATION_HOST: '10.70.100.25'
       SSO_CLIENT_ID: '123456789fibr'
       SSO_CLIENT_SECRET: 'xn2TWEhX0Ker2h0ZEQXYLjE9SOIq1I24'
-      SSO_REDIRECT_URI: 'http://10.70.100.25:4141/callback/'
+      SSO_REDIRECT_URI: 'http://10.70.100.25/callback/'
       SSO_BASE_URI: 'https://single.sysdev.id/'
       SSO_REALM_MASTER: 'single'
       HDFS_URL: "http://10.70.100.24:8088/"
