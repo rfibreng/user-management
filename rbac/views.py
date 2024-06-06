@@ -89,9 +89,9 @@ def notification_user(request):
             
             if status == 'user add':
                 user, created = User.objects.update_or_create(
-                    user_id=user_id,
+                    username=username,
                     defaults={
-                        'username': username,
+                        'user_id': user_id,
                         'email': email,
                         'first_name': first_name,
                         'last_name': last_name,
