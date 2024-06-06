@@ -66,6 +66,7 @@ def custom_404(request):
 @csrf_exempt
 def notification_user(request):
     User = get_user_model()
+    print(request.body)
     if request.method == 'POST':
         try:
             payload = json.loads(request.body)
