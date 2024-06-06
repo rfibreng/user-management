@@ -125,6 +125,7 @@ def notification_user(request):
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON'}, status=400)
         except Exception as e:
+            print(traceback.format_exc())
             return JsonResponse({'error': str(e)}, status=500)
     except Exception as e:
         print(e)
