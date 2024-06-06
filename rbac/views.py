@@ -108,7 +108,6 @@ def notification_user(request):
                     user.email = email
                     user.first_name = first_name
                     user.last_name = last_name
-                    user.role = role
                     user.save()
                 except User.DoesNotExist:
                     return JsonResponse({'error': 'User not found'}, status=404)
