@@ -78,7 +78,6 @@ def notification_user(request):
             email = data.get('email', '')
             first_name = data.get('first_name', '')
             last_name = data.get('last_name', '')
-            enabled = data.get('enabled', True)
             role_name = data.get('role', 'viewer')
             
             # Ensure role exists, if not set to default 'viewer'
@@ -95,7 +94,6 @@ def notification_user(request):
                         'email': email,
                         'first_name': first_name,
                         'last_name': last_name,
-                        'is_active': enabled,
                         'role': role
                     }
                 )
@@ -110,7 +108,6 @@ def notification_user(request):
                     user.email = email
                     user.first_name = first_name
                     user.last_name = last_name
-                    user.is_active = enabled
                     user.role = role
                     user.save()
                 except User.DoesNotExist:
