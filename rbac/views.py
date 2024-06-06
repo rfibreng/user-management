@@ -114,7 +114,7 @@ def notification_user(request):
 
             elif status == 'user remove':
                 try:
-                    user = User.objects.get(username=username)
+                    user = User.objects.get(user_id=user_id)
                     user.delete()
                 except User.DoesNotExist:
                     return JsonResponse({'error': 'User not found'}, status=404)
