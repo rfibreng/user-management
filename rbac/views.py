@@ -63,6 +63,7 @@ def logout_view(request):
 def custom_404(request):
     return render(request, '404.html', status=404)
 
+@csrf_exempt
 def notification_user(request):
     User = get_user_model()
     if request.method == 'POST':
