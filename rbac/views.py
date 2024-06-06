@@ -15,6 +15,7 @@ import requests
 import base64
 from django.http import HttpResponse, JsonResponse
 import json
+import traceback
 
 HELP_DESK_URL = os.getenv('HELP_DESK_URL')
 HELP_DESK_MANAGEMENT_URL = os.getenv('HELP_DESK_MANAGEMENT_URL')
@@ -127,6 +128,7 @@ def notification_user(request):
             return JsonResponse({'error': str(e)}, status=500)
     except Exception as e:
         print(e)
+        print(traceback.format_exc())
 
     return JsonResponse({'error': 'Invalid method'}, status=405)
 
