@@ -36,8 +36,8 @@ services:
       DATA_PROCESSOR_URL: '#'
       STARROCKS_URL: "http://10.70.100.24:8035/"
       AIRFLOW_URL: "http://10.70.100.24:8089/"
-      HELP_DESK_URL: "https://dev05.overtech.id/"
-      HELP_DESK_MANAGEMENT_URL: "https://dev05.overtech.id/cms/admin/login"
+      HELP_DESK_URL: "https://helpdesk.sysdev.id/"
+      HELP_DESK_MANAGEMENT_URL: "https://helpdesk.sysdev.id/cms/admin/login"
       POSTGRESQL_HOST: "db"
       POSTGRESQL_PORT: "5432"
       POSTGRESQL_USER: "myuser"
