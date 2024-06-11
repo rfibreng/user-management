@@ -65,7 +65,11 @@
 <body>
     {% include 'navbar.html' %}
     <div class="container">
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <form method="get" class="form-inline">
+                <input type="text" name="q" class="form-control mr-sm-2" placeholder="Search by role name" value="{{ query }}">
+                <button type="submit" class="btn btn-outline-light">Search</button>
+            </form>
             <a href="{% url 'role_create' %}" class="btn btn-create">Create Role</a>
         </div>
         <div class="card">

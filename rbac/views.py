@@ -377,7 +377,13 @@ def role_list_view(request):
     if not is_admin_apps:
         return redirect('404')
     
-    roles = Role.objects.all()
+    query = request.GET.get('q', '')
+    
+    if query:
+        roles = Role.objects.filter(name__icontains=query)
+    else:
+        roles = Role.objects.all()
+
     paginator = Paginator(roles, 20)  # Show 20 roles per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -386,8 +392,9 @@ def role_list_view(request):
         'show_admin_menu': is_admin_apps,
         'show_help_desk_management': is_help_desk,
         'page_obj': page_obj,
+        'query': query,
         'help_desk_url': HELP_DESK_URL,
-        'help_desk_management_url':HELP_DESK_MANAGEMENT_URL
+        'help_desk_management_url': HELP_DESK_MANAGEMENT_URL
     }
     return render(request, 'roles.html', context)
 
