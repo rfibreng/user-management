@@ -91,7 +91,7 @@
         <div class="menu-container">
             {% if 'hdfs' in permissions %}
             <div class="card">
-                <a href="{{ hdfs_url }}">
+                <a href="{{ hdfs_url }}" target="_blank">
                     <i class="fas fa-database"></i>
                     <div class="card-title">Data Lake</div>
                 </a>
@@ -99,7 +99,7 @@
             {% endif %}
             {% if 'starrocks' in permissions %}
             <div class="card">
-                <a href="{{ starrocks_url }}">
+                <a href="{{ starrocks_url }}" target="_blank">
                     <i class="fas fa-star"></i>
                     <div class="card-title">Data Warehouse</div>
                 </a>
@@ -107,7 +107,7 @@
             {% endif %}
             {% if 'airflow' in permissions %}
             <div class="card">
-                <a href="{{ airflow_url }}">
+                <a href="{{ airflow_url }}" target="_blank">
                     <i class="fas fa-wind"></i>
                     <div class="card-title">Orchestrator</div>
                 </a>
@@ -115,7 +115,7 @@
             {% endif %}
             {% if 'data_processor' in permissions %}
             <div class="card">
-                <a href="{{ data_processor_url }}">
+                <a href="{{ data_processor_url }}" target="_blank">
                     <i class="fas fa-cogs"></i>
                     <div class="card-title">Data Processor</div>
                 </a>
@@ -123,7 +123,7 @@
             {% endif %}
             {% if 'data_modeler' in permissions %}
             <div class="card">
-                <a href="{{ data_modeler_url }}">
+                <a href="{{ data_modeler_url }}" target="_blank">
                     <i class="fas fa-project-diagram"></i>
                     <div class="card-title">Data Modeler</div>
                 </a>
@@ -131,7 +131,7 @@
             {% endif %}
             {% if 'dashboard' in permissions %}
             <div class="card">
-                <a href="{{ dashboard_url }}">
+                <a href="{{ dashboard_url }}" target="_blank">
                     <i class="fas fa-tachometer-alt"></i>
                     <div class="card-title">Dashboard</div>
                 </a>
