@@ -37,7 +37,7 @@ services:
       STARROCKS_URL: "http://10.70.100.24:8035/"
       AIRFLOW_URL: "http://10.70.100.24:8089/"
       HELP_DESK_URL: "https://helpdesk.sysdev.id/"
-      HELP_DESK_MANAGEMENT_URL: "https://helpdesk.sysdev.id/cms/admin/login"
+      HELP_DESK_MANAGEMENT_URL: "https://helpdesk.sysdev.id/api/faq/admin/login"
       POSTGRESQL_HOST: "db"
       POSTGRESQL_PORT: "5432"
       POSTGRESQL_USER: "myuser"
