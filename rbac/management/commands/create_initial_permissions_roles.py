@@ -30,7 +30,7 @@ class Command(BaseCommand):
                 'airflow',
                 'data_modeler',
                 'data_processor',
-                'data_managemet'
+                'data_management'
             ],
             'viewer': [
                 'dashboard'
