@@ -30,11 +30,10 @@ services:
       SSO_REDIRECT_URI: 'http://10.70.100.25:4141/callback/'
       SSO_BASE_URI: 'https://sso.4tz.web.id/'
       SSO_REALM_MASTER: 'master'
-      HDFS_URL: "http://10.70.100.24:9870/"
+      HDFS_URL: "http://10.70.100.24:8028/"
       DASHBOARD_URL: 'http://10.70.100.24:5000/'
       DATA_MODELER_URL: 'http://10.70.100.8:7777/'
       DATA_PROCESSOR_URL: '#'
-      STARROCKS_URL: "http://10.70.100.24:8035/"
       AIRFLOW_URL: "http://10.70.100.24:8089/"
       HELP_DESK_URL: "https://helpdesk.sysdev.id/"
       HELP_DESK_MANAGEMENT_URL: "https://helpdesk.sysdev.id/api/faq/admin/login"

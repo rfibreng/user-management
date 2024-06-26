@@ -89,19 +89,11 @@
     <div class="container">
         <img src="/static/assets/eyre-white.png" alt="Eyre Logo" class="eyre-logo">
         <div class="menu-container">
-            {% if 'hdfs' in permissions %}
+            {% if 'data_management' in permissions %}
             <div class="card">
                 <a href="{{ hdfs_url }}" target="_blank">
                     <i class="fas fa-database"></i>
-                    <div class="card-title">Data Lake</div>
-                </a>
-            </div>
-            {% endif %}
-            {% if 'starrocks' in permissions %}
-            <div class="card">
-                <a href="{{ starrocks_url }}" target="_blank">
-                    <i class="fas fa-star"></i>
-                    <div class="card-title">Data Warehouse</div>
+                    <div class="card-title">Data Management</div>
                 </a>
             </div>
             {% endif %}

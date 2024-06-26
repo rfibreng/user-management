@@ -261,7 +261,6 @@ def home_view(request):
         'dashboard_url': os.getenv('DASHBOARD_URL', '#'),
         'data_modeler_url': os.getenv('DATA_MODELER_URL', '#'),
         'data_processor_url': os.getenv('DATA_PROCESSOR_URL', '#'),
-        'starrocks_url': os.getenv('STARROCKS_URL', '#'),
         'airflow_url': os.getenv('AIRFLOW_URL', '#'),
         'help_desk_url': HELP_DESK_URL,
         'help_desk_management_url':HELP_DESK_MANAGEMENT_URL

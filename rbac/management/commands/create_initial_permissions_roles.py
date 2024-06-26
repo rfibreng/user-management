@@ -13,8 +13,7 @@ class Command(BaseCommand):
             'airflow',
             'data_modeler',
             'data_processor',
-            'starrocks',
-            'hdfs'
+            'data_management'
         ]
 
         # Create permissions
@@ -31,8 +30,7 @@ class Command(BaseCommand):
                 'airflow',
                 'data_modeler',
                 'data_processor',
-                'starrocks',
-                'hdfs'
+                'data_managemet'
             ],
             'viewer': [
                 'dashboard'
@@ -49,3 +47,12 @@ class Command(BaseCommand):
                 permission = Permission.objects.get(name=perm)
                 role.permissions.add(permission)
             self.stdout.write(self.style.SUCCESS(f'Role "{role_name}" created or updated with permissions.'))
+        
+         # Check and delete 'starrocks' and 'hdfs' permissions if they exist
+        for perm_name in ['starrocks', 'hdfs']:
+            try:
+                permission = Permission.objects.get(name=perm_name)
+                permission.delete()
+                self.stdout.write(self.style.SUCCESS(f'Permission "{perm_name}" deleted.'))
+            except Permission.DoesNotExist:
+                self.stdout.write(self.style.WARNING(f'Permission "{perm_name}" does not exist.'))
